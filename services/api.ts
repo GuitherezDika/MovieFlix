@@ -1,5 +1,5 @@
 export const TMDB_CPNFIG = {
-    BASE_URL: 'ttps://api.themoviedb.org/3',
+    BASE_URL: 'https://api.themoviedb.org/3',
     API_KEY: process.env.EXPO_PUBLIC_MOVIE_API_KEY,
     headers: {
         accept: 'application/json',
@@ -7,20 +7,22 @@ export const TMDB_CPNFIG = {
     }
 }
 
-export const fetchMovies = async ({query}: {query: string}) => {
-        const endpoint= query ? 
+export const fetchMovies = async ({ query }: { query: string }) => {
+    const endpoint = query ?
         `${TMDB_CPNFIG.BASE_URL}/search/movie?query=${encodeURIComponent(query)}`
-        :`${TMDB_CPNFIG.BASE_URL}/discover/movie?sort_by=popularity.desc`;
+        : `${TMDB_CPNFIG.BASE_URL}/discover/movie?sort_by=popularity.desc`;
 
-        const response = await fetch(endpoint, {
-            method: 'GET',
-            headers: TMDB_CPNFIG.headers
-        })
-        if(!response.ok){
-            throw new Error('Failed to fetch movie!', response.statusText)
-        } 
+    const response = await fetch(endpoint, {
+        method: 'GET',
+        headers: TMDB_CPNFIG.headers
+    })
 
-        const data = await response.json();
-        return data.results;
-        
+    if (!response.ok) {
+        throw new Error('Failed to fetch movie!')
+    }
+
+    const data = await response.json();
+
+    return data.results;
+
 }
