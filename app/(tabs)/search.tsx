@@ -20,16 +20,17 @@ const Search = () => {
     }), false);
 
     useEffect(() => {
-        const func = async () => {
-            if(searchQuery.trim()) {
-                loadMovies()
+        const timeoutId = setTimeout(async () => {
+            if (searchQuery.trim()) {
+                await loadMovies()
             } else {
                 reset()
             }
-        }
-        
-        func();
+        }, 500);
+
+        return () => clearTimeout(timeoutId)
     }, [searchQuery])
+
     return (
         <View className='flex-1 bg-primary'>
             <Image source={images.bg} className='flex-1 absolute w-full z-0' />
